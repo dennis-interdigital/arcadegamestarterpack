@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,21 +30,17 @@ namespace EditYourNameSpace
         Dictionary<UIState, GameObject> uiBlueprintDict;
         Dictionary<PopupState, GameObject> popupBlueprintDict;
 
-        public Dictionary<PopupState, BaseUI> currActivePopups;
+        Dictionary<PopupState, BaseUI> currActivePopups;
 
-        public List<PopupState> currPopupShowQueue;
-        public List<PopupState> currPopupHideQueue;
-        public List<object[]> currPoupShowParamQueue;
-        public List<object[]> currPopupHideParamQueue;
+        Queue<PopupState> currPopupShowQueue;
+        Queue<PopupState> currPopupHideQueue;
+        Queue<object[]> currPoupShowParamQueue;
 
-        public UIState currentUIState;
-        public BaseUI currentActiveUI;
+        [HideInInspector] public UIState currentUIState;
+        [HideInInspector] public BaseUI currentActiveUI;
 
         StageManager stageManager;
 
-        Coroutine currUICoroutine;
-        Coroutine currPopupShowCoroutine;
-        Coroutine currPopupHideCoroutine;
         bool isCoroutinePopupShowRunning;
         bool isCoroutinePopupHideRunning;
 
@@ -56,15 +51,14 @@ namespace EditYourNameSpace
             uiBlueprintDict = new Dictionary<UIState, GameObject>();
             popupBlueprintDict = new Dictionary<PopupState, GameObject>();
 
-            currPopupShowQueue = new List<PopupState>();
-            currPopupHideQueue = new List<PopupState>();
-            currPoupShowParamQueue = new List<object[]>();
-            currPopupHideParamQueue = new List<object[]>();
+            currPopupShowQueue = new Queue<PopupState>();
+            currPopupHideQueue = new Queue<PopupState>();
+            currPoupShowParamQueue = new Queue<object[]>();
 
             uiBlueprintDict.Add(UIState.Sample, sampleUIPrefab.gameObject);
 
             popupBlueprintDict.Add(PopupState.Sample, samplePopupPrefab.gameObject);
-            
+
         }
 
         public void DoUpdate(float dt)
@@ -84,7 +78,7 @@ namespace EditYourNameSpace
         #region UI
         public void ShowUI(UIState state, params object[] payload)
         {
-
+            StartCoroutine(ShowingUI(state, payload));
         }
 
         IEnumerator ShowingUI(UIState state, params object[] payload)
@@ -157,25 +151,143 @@ namespace EditYourNameSpace
         #region Popup
         public void ShowPopup(PopupState state, params object[] payload)
         {
+            if (!isCoroutinePopupShowRunning)
+            {
+                isCoroutinePopupShowRunning = true;
+                StartCoroutine(ShowingPopup(state, payload));
+            }
+            else
+            {
+                QueueShowPopup(state, payload);
+            }
+        }
 
+        public void HidePopup(PopupState state)
+        {
+            if (!isCoroutinePopupHideRunning)
+            {
+                isCoroutinePopupHideRunning = true;
+                StartCoroutine(HidingPopup(state));
+            }
+            else
+            {
+                QueueHidePopup(state);
+            }
         }
 
         IEnumerator ShowingPopup(PopupState state, params object[] payload)
         {
-            yield return null;
+            BaseUI popup = CreatePopup(state);
+            if (popup != null)
+            {
+                yield return popup.Showing(payload);
+                isCoroutinePopupShowRunning = false;
+
+                NextShowQueue();
+            }
+            else
+            {
+                Debug.Log($"Popup {state} is null!");
+                isCoroutinePopupShowRunning = false;
+            }
         }
 
-        public void HidePopup(PopupState state, params object[] payload)
+        IEnumerator HidingPopup(PopupState state)
         {
+            if (currActivePopups.ContainsKey(state))
+            {
+                BaseUI popup = currActivePopups[state];
+                yield return popup.Hiding();
+                DestroyPopup(state);
+                isCoroutinePopupHideRunning = false;
 
+                NextHideQueue();
+            }
+            else
+            {
+                Debug.LogError($"Popup {state} is not active!");
+                isCoroutinePopupHideRunning = false;
+            }
         }
 
-        IEnumerator HidingPopup(PopupState state, params object[] payload)
+        void QueueShowPopup(PopupState state, params object[] payload)
         {
-            yield return null;
+            currPopupShowQueue.Enqueue(state);
+            currPoupShowParamQueue.Enqueue(payload);
+        }
+
+        void QueueHidePopup(PopupState state)
+        {
+            currPopupHideQueue.Enqueue(state);
+        }
+
+        void NextShowQueue()
+        {
+            if (currPopupShowQueue.Count > 0)
+            {
+                PopupState state = currPopupShowQueue.Dequeue();
+                object[] payload = currPoupShowParamQueue.Dequeue();
+                ShowPopup(state, payload);
+            }
+        }
+
+        void NextHideQueue()
+        {
+            if (currPopupHideQueue.Count > 0)
+            {
+                PopupState state = currPopupHideQueue.Dequeue();
+                HidePopup(state);
+            }
+        }
+
+        BaseUI CreatePopup(PopupState state)
+        {
+            BaseUI result = null;
+
+            if (!currActivePopups.ContainsKey(state))
+            {
+                GameObject go = Instantiate(popupBlueprintDict[state], rtPopupContainer);
+                Transform transform = go.transform;
+                transform.localPosition = Vector3.zero;
+                transform.localScale = Vector3.one;
+                transform.localRotation = Quaternion.identity;
+
+                BaseUI baseUI = go.GetComponent<BaseUI>();
+                currActivePopups.Add(state, baseUI);
+
+                result = baseUI;
+            }
+            else
+            {
+                Debug.Log($"Popup {state} already exist!");
+            }
+
+            return result;
+        }
+
+        void DestroyPopup(PopupState state)
+        {
+            if (currActivePopups.ContainsKey(state))
+            {
+                BaseUI baseUI = currActivePopups[state];
+                currActivePopups.Remove(state);
+
+                Destroy(baseUI.gameObject);
+            }
         }
         #endregion
 
+        public bool IsPopupActive(PopupState state)
+        {
+            bool result = currActivePopups.ContainsKey(state);
+            return result;
+        }
+
+        public BaseUI GetCurrentActivePopup(PopupState state)
+        {
+            BaseUI result = currActivePopups[state];
+            return result;
+        }
     }
 }
 
