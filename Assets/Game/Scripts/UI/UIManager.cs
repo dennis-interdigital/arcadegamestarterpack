@@ -51,6 +51,8 @@ namespace EditYourNameSpace
             uiBlueprintDict = new Dictionary<UIState, GameObject>();
             popupBlueprintDict = new Dictionary<PopupState, GameObject>();
 
+            currActivePopups = new Dictionary<PopupState, BaseUI>();
+
             currPopupShowQueue = new Queue<PopupState>();
             currPopupHideQueue = new Queue<PopupState>();
             currPoupShowParamQueue = new Queue<object[]>();
