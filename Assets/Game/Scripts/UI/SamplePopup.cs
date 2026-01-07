@@ -9,9 +9,9 @@ namespace EditYourNameSpace
     {
         [SerializeField] Button buttonSample;
 
-        public override void Init(StageManager inStageManager)
+        public override void Init(GameManager inGameManager)
         {
-            base.Init(inStageManager);
+            base.Init(inGameManager);
             buttonSample.onClick.AddListener(OnClickSample);
         }
 

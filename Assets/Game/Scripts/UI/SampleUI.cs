@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class SampleUI : BaseUI
 {
-    public override void Init(StageManager inStageManager)
+    public override void Init(GameManager inGameManager)
     {
-        base.Init(inStageManager);
+        base.Init(inGameManager);
     }
 
     //READ ME 

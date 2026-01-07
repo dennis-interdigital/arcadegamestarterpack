@@ -7,13 +7,13 @@ namespace EditYourNameSpace
 {
     public class BaseUI : MonoBehaviour
     {
-        protected StageManager stageManager;
+        protected GameManager gameManager;
         protected UIManager uiManager;
 
-        public virtual void Init(StageManager inStageManager)
+        public virtual void Init(GameManager inGameManager)
         {
-            stageManager = inStageManager;
-            uiManager = stageManager.uiManager;
+            gameManager = inGameManager;
+            uiManager = gameManager.uiManager;
         }
 
         public virtual void DoUpdate(float dt)

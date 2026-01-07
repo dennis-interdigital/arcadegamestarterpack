@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 //READ ME: Edit using:
@@ -7,25 +8,16 @@ namespace EditYourNameSpace
 {
     public class StageManager : MonoBehaviour
     {
-        public UIManager uiManager;
+        GameManager gameManager;
 
-        bool gameReady = false;
-
-        void Start()
+        public void Init(GameManager inGameManager)
         {
-            uiManager.Init(this);
-
-            gameReady = true;
+            gameManager = inGameManager;
         }
 
-        void FixedUpdate()
+        public void DoUpdate(float dt)
         {
-            if (gameReady)
-            {
-                float dt = Time.deltaTime;
 
-                //DoUpdate here
-            }
         }
     }
 }
