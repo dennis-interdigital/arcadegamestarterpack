@@ -41,7 +41,6 @@ namespace EditYourNameSpace
         public BaseUI currentActiveUI;
 
         GameManager gameManager;
-        StageManager stageManager;
 
         bool isCoroutinePopupShowRunning;
         bool isCoroutinePopupHideRunning;
@@ -49,7 +48,6 @@ namespace EditYourNameSpace
         public void Init(GameManager inGameManager)
         {
             gameManager = inGameManager;
-            stageManager = gameManager.stageManager;
 
             uiBlueprintDict = new Dictionary<UIState, GameObject>();
             popupBlueprintDict = new Dictionary<PopupState, GameObject>();

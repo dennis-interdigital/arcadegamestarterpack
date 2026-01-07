@@ -1,27 +1,30 @@
-public class CurrencyManager
+namespace EditYourNameSpace
 {
-    GameManager gameManager;
-    UserData userData;
-
-    public void Init(GameManager inGameManager)
+    public class CurrencyManager
     {
-        gameManager = inGameManager;
-        userData = gameManager.userData;
-    }
+        GameManager gameManager;
+        UserData userData;
 
-    public bool IsCoinSufficient(int amount)
-    {
-        bool result = userData.coin >= amount;
-        return result;
-    }
+        public void Init(GameManager inGameManager)
+        {
+            gameManager = inGameManager;
+            userData = gameManager.userData;
+        }
 
-    public void AddCoin(int amount)
-    {
-        userData.coin += amount;
-    }
+        public bool IsCoinSufficient(int amount)
+        {
+            bool result = userData.coin >= amount;
+            return result;
+        }
 
-    public void SpendCoin(int amount)
-    {
-        userData.coin -= amount;
+        public void AddCoin(int amount)
+        {
+            userData.coin += amount;
+        }
+
+        public void SpendCoin(int amount)
+        {
+            userData.coin -= amount;
+        }
     }
 }

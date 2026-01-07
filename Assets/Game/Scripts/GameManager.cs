@@ -1,74 +1,89 @@
-using EditYourNameSpace;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace EditYourNameSpace
 {
-    public CoroutineCache coroutine;
-
-    public StageManager stageManager;
-    public UserData userData;
-
-    //READ ME other managers are here (must be public), uiManager is last.
-    public CurrencyManager currencyManager;
-
-    public UIManager uiManager;
-
-
-    public bool gameReady;
-
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        Load();
+        [HideInInspector] public CoroutineCache coroutine;
 
-        //READ ME manager declaration here
-        currencyManager = new CurrencyManager();
+        public StageManager stageManager;
+        public UserData userData;
 
-        InitManagers();
-    }
+        //READ ME other managers are here (must be public), uiManager is last.
+        public CurrencyManager currencyManager;
 
-    //READ ME manager initialization here
-    public void InitManagers()
-    {
-        currencyManager.Init(this);
-        uiManager.Init(this);
-    }
+        public UIManager uiManager;
 
-    void FixedUpdate()
-    {
-        if (gameReady)
+
+        public bool gameReady;
+
+        void Awake()
         {
-            float dt = Time.deltaTime;
+            Application.targetFrameRate = 60;
 
-            //READ ME managers doupdate here, uiManager is last
-            stageManager.DoUpdate(dt);
-
-            uiManager.DoUpdate(dt);
+            coroutine = gameObject.AddComponent<CoroutineCache>();
+            coroutine.Init();
         }
-    }
 
-    void Load()
-    {
-        bool userDataExist = PlayerPrefs.HasKey(Parameter.PlayerPrefKey.SAVE_DATA);
-        if (userDataExist)
+        void Start()
         {
-            string jsonUserData = PlayerPrefs.GetString(Parameter.PlayerPrefKey.SAVE_DATA);
-            userData = JsonUtility.FromJson<UserData>(jsonUserData);
+            Load();
+
+            //READ ME manager declaration here
+            currencyManager = new CurrencyManager();
+
+            InitManagers();
         }
-        else
+
+        //READ ME manager initialization here
+        public void InitManagers()
         {
-            userData = new UserData();
-            userData.Init(true);
+            currencyManager.Init(this);
+            uiManager.Init(this);
+
+            gameReady = true;
+            //READ ME call first UI below
+            uiManager.ShowUI(UIState.Sample);
+        }
+
+        void FixedUpdate()
+        {
+            if (gameReady)
+            {
+                float dt = Time.deltaTime;
+
+                //READ ME managers doupdate here, uiManager is last
+                stageManager.DoUpdate(dt);
+
+                uiManager.DoUpdate(dt);
+            }
+        }
+
+        void Load()
+        {
+            bool userDataExist = PlayerPrefs.HasKey(Parameter.PlayerPrefKey.SAVE_DATA);
+            if (userDataExist)
+            {
+                string jsonUserData = PlayerPrefs.GetString(Parameter.PlayerPrefKey.SAVE_DATA);
+                userData = JsonUtility.FromJson<UserData>(jsonUserData);
+            }
+            else
+            {
+                userData = new UserData();
+                userData.Init(true);
+                Save();
+            }
+        }
+
+        public void Save()
+        {
+            string jsonUserData = JsonUtility.ToJson(userData);
+            PlayerPrefs.SetString(Parameter.PlayerPrefKey.SAVE_DATA, jsonUserData);
+        }
+        void OnApplicationQuit()
+        {
             Save();
         }
     }
 
-    public void Save()
-    {
-        string jsonUserData = JsonUtility.ToJson(userData);
-        PlayerPrefs.SetString(Parameter.PlayerPrefKey.SAVE_DATA, jsonUserData);
-    }
-    void OnApplicationQuit()
-    {
-        Save();
-    }
 }

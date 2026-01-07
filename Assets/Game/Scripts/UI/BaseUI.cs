@@ -1,6 +1,4 @@
-using EditYourNameSpace;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EditYourNameSpace
@@ -10,6 +8,9 @@ namespace EditYourNameSpace
         protected GameManager gameManager;
         protected UIManager uiManager;
 
+        /// <summary>
+        /// Only for initialization. Do not put animation here!
+        /// </summary>
         public virtual void Init(GameManager inGameManager)
         {
             gameManager = inGameManager;
@@ -21,6 +22,18 @@ namespace EditYourNameSpace
 
         }
 
+        /// <summary>
+        /// Showing is called after Init. animation does play here
+        /// 
+        /// <para>NOTE:</para>
+        /// Any DoTween animation started inside this coroutine
+        /// must be yielded (WaitForCompletion / WaitForKill).
+        /// Do NOT start tweens without yielding them,
+        /// or this will disrupt the UI Framework flow.
+        /// </summary>
+        /// <returns>
+        /// IEnumerator for StartCoroutine.
+        /// </returns>
         public virtual IEnumerator Showing(params object[] payload)
         {
             yield return null;

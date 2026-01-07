@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +29,7 @@ namespace EditYourNameSpace
         void OnClickSample()
         {
             Debug.Log("Sample button clicked");
+            uiManager.HidePopup(PopupState.Sample);
         }
     }
 }
