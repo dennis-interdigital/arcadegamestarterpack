@@ -19,7 +19,7 @@ namespace EditYourNameSpace
 
         void Awake()
         {
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 120;
 
             coroutine = gameObject.AddComponent<CoroutineCache>();
             coroutine.Init();
