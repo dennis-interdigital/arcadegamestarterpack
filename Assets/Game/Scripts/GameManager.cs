@@ -13,7 +13,7 @@ namespace EditYourNameSpace
         public CurrencyManager currencyManager;
 
         public UIManager uiManager;
-
+        public AudioManager audioManager;
 
         public bool gameReady;
 
@@ -38,10 +38,14 @@ namespace EditYourNameSpace
         //READ ME manager initialization here
         public void InitManagers()
         {
+            //READ ME Init Manager here
             currencyManager.Init(this);
+
             uiManager.Init(this);
+            audioManager.Init(this);
 
             gameReady = true;
+
             //READ ME call first UI below
             uiManager.ShowUI(UIState.Sample);
         }
