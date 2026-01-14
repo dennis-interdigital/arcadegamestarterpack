@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee461b06cd31674eaed98560bfbbfaf, type: 3}
   m_Name: AudioSO
   m_EditorClassIdentifier: 
+  bgmDatas: []
+  sfxDatas:
+  - name: 0
+    clip: {fileID: 8300000, guid: 766ae17c77dea724e8ffa56e58bc0fea, type: 3}

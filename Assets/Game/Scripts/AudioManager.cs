@@ -4,6 +4,17 @@ using UnityEngine;
 
 namespace EditYourNameSpace
 {
+    public enum BGM
+    {
+
+        COUNT
+    }
+    public enum SFX
+    {
+        SFX_PositiveClick2,
+        COUNT
+    }
+
     public class AudioManager : MonoBehaviour
     {
         [SerializeField] private AudioSource sfxSource;
