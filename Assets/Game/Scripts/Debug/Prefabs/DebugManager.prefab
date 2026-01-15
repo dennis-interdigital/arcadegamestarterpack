@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8982714145168347537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 574687330430490911}
+  - component: {fileID: 334048156827896005}
+  m_Layer: 0
+  m_Name: DebugManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &574687330430490911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982714145168347537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &334048156827896005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982714145168347537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dabf8c638c97721499122fcfe3dc37d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabDebugCanvas: {fileID: 3879278867409409726, guid: b6b7c9db024fe5a40af69203735adb22, type: 3}
+  prefabDebugTabUI: {fileID: 2014352682930514992, guid: 67ef2fcd33183704c81a1dbed47ff0da, type: 3}
+  prefabDebugButtonUI: {fileID: 1320931310374781273, guid: caf93f97e4486634d9d3c0af3b7f6bc3, type: 3}
+  prefabDebugInspectorUI: {fileID: 6493517100166500034, guid: d713285417f3623438a40ced19843da2, type: 3}
+  prefabDebugDropdownUI: {fileID: 4408625656257918925, guid: f07796a03e61f4b4da6890b32bcf02d0, type: 3}
+  prefabDebugInputButtonUI: {fileID: 2739483272950640945, guid: bb10e303c54a64c4d8ae1d672f5c0429, type: 3}
+  prefabInGameDebugConsole: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+  debugButtonHeight: 100
+  debugInspectorHeight: 200
+  debugInputButtonHeight: 200
+  debugDropdownHeight: 100

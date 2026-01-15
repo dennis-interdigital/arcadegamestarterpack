@@ -15,6 +15,9 @@ namespace EditYourNameSpace
         public UIManager uiManager;
         public AudioManager audioManager;
 
+        public DebugManager debugManager;
+        public DebugHandler debugHandler;
+
         public bool gameReady;
 
         void Awake()
@@ -44,6 +47,10 @@ namespace EditYourNameSpace
             uiManager.Init(this);
             audioManager.Init(this);
 
+            debugManager.Init();
+            debugHandler = new DebugHandler();
+            debugHandler.Init(this);
+
             gameReady = true;
 
             //READ ME call first UI below
@@ -60,6 +67,8 @@ namespace EditYourNameSpace
                 stageManager.DoUpdate(dt);
 
                 uiManager.DoUpdate(dt);
+
+                debugManager.DoUpdate(dt);
             }
         }
 
