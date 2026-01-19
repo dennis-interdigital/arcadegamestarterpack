@@ -16,10 +16,12 @@ namespace EditYourNameSpace
 
             string tabName = "SAMPLE Button";
             debugManager.AddButton("Debug Button", () => { Debug.Log("Debug Button Clicked"); }, tabName);
+            debugManager.AddButton("Log Error", () => { Debug.LogError("Logged Error"); }, tabName);
 
             tabName = "SAMPLE Inspector";
             debugManager.AddInspector("Time", () => { return DateTime.Now.ToString(); }, tabName);
-            //READ ME add everything here, above "MISC"
+            
+            //READ ME add everything below here, above "MISC"
 
 
             tabName = "MISC";
