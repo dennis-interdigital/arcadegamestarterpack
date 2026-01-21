@@ -90,9 +90,13 @@ namespace EditYourNameSpace
 
         public void Save()
         {
-            string jsonUserData = JsonUtility.ToJson(userData);
-            PlayerPrefs.SetString(Parameter.PlayerPrefKey.SAVE_DATA, jsonUserData);
+            if (userData != null)
+            {
+                string jsonUserData = JsonUtility.ToJson(userData);
+                PlayerPrefs.SetString(Parameter.PlayerPrefKey.SAVE_DATA, jsonUserData);
+            }
         }
+
         void OnApplicationQuit()
         {
             Save();
