@@ -52,6 +52,7 @@ namespace EditYourNameSpace
 
         public void Init()
         {
+#if USE_DEBUG
             inspectorList = new List<DebugInspector>();
             debugTabDict = new Dictionary<string, DebugTabUI>();
 
@@ -66,10 +67,12 @@ namespace EditYourNameSpace
 
             Application.logMessageReceived += HandleLog;
             init = true;
+#endif
         }
 
-        public void DoUpdate(float dt)
+        void Update()
         {
+#if USE_DEBUG
             if (init)
             {
                 if (canvas.gameObject.activeSelf)
@@ -81,6 +84,7 @@ namespace EditYourNameSpace
                     }
                 }
             }
+#endif
         }
 
         void OnApplicationQuit()

@@ -67,8 +67,6 @@ namespace EditYourNameSpace
                 stageManager.DoUpdate(dt);
 
                 uiManager.DoUpdate(dt);
-
-                debugManager.DoUpdate(dt);
             }
         }
 
