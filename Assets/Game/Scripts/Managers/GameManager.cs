@@ -35,6 +35,9 @@ namespace EditYourNameSpace
             //READ ME manager declaration here
             currencyManager = new CurrencyManager();
 
+            debugHandler = new DebugHandler();
+
+
             InitManagers();
         }
 
@@ -48,7 +51,6 @@ namespace EditYourNameSpace
             audioManager.Init(this);
 
             debugManager.Init();
-            debugHandler = new DebugHandler();
             debugHandler.Init(this);
 
             gameReady = true;
