@@ -55,3 +55,4 @@ MonoBehaviour:
   debugInspectorHeight: 200
   debugInputButtonHeight: 200
   debugDropdownHeight: 100
+  inGameConsole: {fileID: 11452418, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
