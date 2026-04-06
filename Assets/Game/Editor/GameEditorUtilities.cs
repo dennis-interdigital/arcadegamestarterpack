@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -23,57 +24,58 @@ public class GameEditorUtilities
     [MenuItem("InterDigital/Toggle USE_DEBUG")]
     public static void ToggleUseDebug()
     {
-        BuildTargetGroup group = GetBuildTargetGroup();
-        string[] defines = GetDefines(group);
+        NamedBuildTarget target = GetNamedBuildTarget();
+        string[] defines = GetDefines(target);
 
         bool hasDebugDefine = defines.Contains(DEFINE_DEBUG);
         if (hasDebugDefine)
         {
-            RemoveDebugDefine(group);
+            RemoveDebugDefine(target);
         }
         else
         {
-            AddDebugDefine(group);
+            AddDebugDefine(target);
         }
     }
 
     [MenuItem("InterDigital/Toggle USE_DEBUG", true)]
     public static bool ToggleDebugValidate()
     {
-        BuildTargetGroup group = GetBuildTargetGroup();
-        bool enabled = GetDefines(group).Contains(DEFINE_DEBUG);
+        NamedBuildTarget target = GetNamedBuildTarget();
+        bool enabled = GetDefines(target).Contains(DEFINE_DEBUG);
         Menu.SetChecked("InterDigital/Toggle USE_DEBUG", enabled);
         return true;
     }
 
-    static void AddDebugDefine(BuildTargetGroup group)
+    static void AddDebugDefine(NamedBuildTarget target)
     {
-        string[] defines = GetDefines(group);
+        string[] defines = GetDefines(target);
         List<string> list = defines.ToList();
 
         if (!list.Contains(DEFINE_DEBUG))
         {
             list.Add(DEFINE_DEBUG);
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(';', list));
+            PlayerSettings.SetScriptingDefineSymbols(target, string.Join(';', list));
         }
     }
 
-    static void RemoveDebugDefine(BuildTargetGroup group)
+    static void RemoveDebugDefine(NamedBuildTarget target)
     {
-        string[] defines = GetDefines(group).Where(d => d != DEFINE_DEBUG).ToArray();
+        string[] defines = GetDefines(target).Where(d => d != DEFINE_DEBUG).ToArray();
         List<string> list = defines.ToList();
 
-        PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(';', list));
+        PlayerSettings.SetScriptingDefineSymbols(target, string.Join(';', list));
     }
 
-    static BuildTargetGroup GetBuildTargetGroup()
+    static NamedBuildTarget GetNamedBuildTarget()
     {
-        return BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget);
+        BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget);
+        return NamedBuildTarget.FromBuildTargetGroup(group);
     }
 
-    static string[] GetDefines(BuildTargetGroup group)
+    static string[] GetDefines(NamedBuildTarget target)
     {
-        string[] result = PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(':').Where(d => !string.IsNullOrEmpty(d)).ToArray();
+        string[] result = PlayerSettings.GetScriptingDefineSymbols(target).Split(';').Where(d => !string.IsNullOrEmpty(d)).ToArray();
         return result;
     }
     #endregion

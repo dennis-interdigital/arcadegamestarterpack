@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace EditYournameSpace
+namespace EditYourNameSpace
 {
     public class DragMove : MonoBehaviour, IDragHandler
     {

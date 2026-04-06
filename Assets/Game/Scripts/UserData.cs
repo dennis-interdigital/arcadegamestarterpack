@@ -6,11 +6,8 @@ public class UserData
 {
     public int coin;
 
-    public void Init(bool firstTimePlay)
+    public void Init()
     {
-        if (firstTimePlay)
-        {
-            coin = 0;
-        }
+        coin = 0;
     }
 }

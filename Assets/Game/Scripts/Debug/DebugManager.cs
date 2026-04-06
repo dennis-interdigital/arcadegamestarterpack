@@ -70,6 +70,7 @@ namespace EditYourNameSpace
 #endif
         }
 
+        //Must remain active and explicit from GameManager's FixedUpdate for debugging purposes.
         void Update()
         {
 #if USE_DEBUG
@@ -105,15 +106,16 @@ namespace EditYourNameSpace
             }
             else
             {
-                tab.debugButtonCount++;
-                tab.SetHeight();
-
                 RectTransform rtContainer = tab.rtContainer;
                 Button button = Instantiate(prefabDebugButtonUI, rtContainer);
                 TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
                 buttonText.SetText(name);
                 button.onClick.AddListener(callback);
                 button.name = $"DebugButton{name}";
+
+                tab.debugButtonCount++;
+                tab.SetHeight();
+
                 return button;
             }
         }
@@ -174,13 +176,16 @@ namespace EditYourNameSpace
             if (tab == null)
             {
                 Debug.LogError($"Tab {tabName} is null!");
+            }
+            else
+            {
                 tab.debugDropdownCount++;
                 tab.SetHeight();
 
                 List<string> optionList = options.ToList<string>();
 
-                RectTransform rtContraienr = tab.rtContainer;
-                result = Instantiate(prefabDebugDropdownUI, rtContraienr);
+                RectTransform rtContainer = tab.rtContainer;
+                result = Instantiate(prefabDebugDropdownUI, rtContainer);
                 result.name = $"DebugDropdown{name}";
                 result.ClearOptions();
                 result.AddOptions(optionList);

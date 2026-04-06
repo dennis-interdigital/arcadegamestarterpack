@@ -83,7 +83,7 @@ namespace EditYourNameSpace
             else
             {
                 userData = new UserData();
-                userData.Init(true);
+                userData.Init();
                 Save();
             }
         }

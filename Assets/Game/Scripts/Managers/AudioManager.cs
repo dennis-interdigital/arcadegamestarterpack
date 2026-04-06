@@ -80,6 +80,7 @@ namespace EditYourNameSpace
 
                 AudioClip toPlay = bgmDict[bgm];
                 bgmCoroutine = StartCoroutine(FadeBGM(toPlay));
+                currentBGM = bgm;
             }
         }
 
