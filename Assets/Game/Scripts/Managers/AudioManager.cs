@@ -17,8 +17,8 @@ namespace EditYourNameSpace
 
     public class AudioManager : MonoBehaviour
     {
-        [SerializeField] private AudioSource sfxSource;
-        [SerializeField] private AudioSource bgmSource;
+        [SerializeField] AudioSource sfxSource;
+        [SerializeField] AudioSource bgmSource;
         [SerializeField] AudioSO audioSO;
 
         Dictionary<BGM, AudioClip> bgmDict;
